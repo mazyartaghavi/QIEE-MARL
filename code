@@ -1,0 +1,23 @@
+# main.py
+
+from agents.qiee_agent import QIEEAgent
+from env.nanorobot_env import NanorobotEnv
+from experiments.train import train_agent
+import yaml
+
+
+def load_config(config_path='configs/config.yaml'):
+    with open(config_path, 'r') as file:
+        return yaml.safe_load(file)
+
+
+def main():
+    config = load_config()
+    env = NanorobotEnv(config['env'])
+    agent = QIEEAgent(env.observation_space, env.action_space, config['agent'])
+    
+    train_agent(env, agent, config['train'])
+
+
+if __name__ == '__main__':
+    main()
